@@ -35,4 +35,9 @@ private static $instance;
         return $this->debug;
     }
 
+    public function isRelease()
+    {
+        return !$this->isDebug();
+    }
+
 }

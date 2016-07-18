@@ -6,7 +6,16 @@ use view\ViewException;
 
 abstract class controller
 {
+    /**
+     * @var array
+     */
     protected $params;
+
+    /**
+     * @var array
+     * stores model data for a view
+     */
+    protected $ViewBag = array();
 
     public function setParams(array $params)
     {
@@ -14,30 +23,35 @@ abstract class controller
     }
 
     /**
-     * @param $view_name string - view name in view/CALLING_CLASS/view_name.php
+     * @param $_view_name string - view name in view/CALLING_CLASS/view_name.php
      */
-    public function view($view_name)
+    // _view_name named with leading underscore to omit overrides by extract
+    public function view($_view_name)
+    {
+        extract($this->ViewBag, EXTR_OVERWRITE);
+        require $this->getViewFilePath($_view_name);
+    }
+
+    private function getViewFilePath($view_name)
     {
         # fastest way to get callers base class name without namespaces
         $class_name = (new \ReflectionClass($this))->getShortName();
         # gets everything before _controller name
         $class_name = substr($class_name, 0, strpos($class_name, '_'));
-        $file = app . DIRECTORY_SEPARATOR
-            . 'view' . DIRECTORY_SEPARATOR
-            . $class_name . DIRECTORY_SEPARATOR
+        $file = app . DS
+            . 'view' . DS
+            . $class_name . DS
             . $view_name . '.php';
         if (file_exists($file)) {
-            require $file;
-            return;
+            return $file;
         }
 
-        $file = app . DIRECTORY_SEPARATOR
-            . 'view' . DIRECTORY_SEPARATOR
-            . '_shared' . DIRECTORY_SEPARATOR
+        $file = app . DS
+            . 'view' . DS
+            . '_shared' . DS
             . $view_name . '.php';
         if (file_exists($file)) {
-            require $file;
-            return;
+            return $file;
         }
         throw new ViewException("No view found for " . $class_name . ' view:' . $view_name);
     }

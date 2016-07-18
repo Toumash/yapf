@@ -1,6 +1,7 @@
 <?php
 define('web_root', __DIR__);
 define('app', __DIR__);
+define('DS', DIRECTORY_SEPARATOR);
 
 spl_autoload_extensions(".php"); // comma-separated list
 spl_autoload_register();
@@ -25,7 +26,7 @@ if ($cfg->isDebug()) {
 session_start();
 
 # routing
-require 'alto-router.php';
+require app . DS . 'vendor' . DS . 'alto-router.php';
 
 $router = new AltoRouter();
 $router->setBasePath('');
@@ -44,8 +45,17 @@ $match = $router->match();
 if ($match === false) {
     # route not found
     require '404.php';
+    return;
+}
+# run the closure from the routes array
+if ($cfg->isRelease()) {
+    try {
+        $match['target']($match['params']);
+    } catch (Exception $e) {
+        require '500.php';
+    }
 } else {
-    # run the closure from the routes array
     $match['target']($match['params']);
 }
+
 
