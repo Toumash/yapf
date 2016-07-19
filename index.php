@@ -6,12 +6,12 @@ define('app', __DIR__ . DS . 'app');
 # generic error pages for production
 function show404()
 {
-    require app . DS . '404.php';
+    require web_root . DS . '404.php';
 }
 
 function show500()
 {
-    require app . DS . '500.php';
+    require web_root . DS . '500.php';
 }
 
 # autoload every class obeying the PS-0 namespace standard.

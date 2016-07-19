@@ -1,3 +1,9 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]
+
+Options -MultiViews
+Options -Indexes
+
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php
