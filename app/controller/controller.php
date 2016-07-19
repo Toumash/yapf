@@ -1,6 +1,6 @@
 <?php
 
-namespace controller;
+namespace app\controller;
 
 use view\ViewException;
 

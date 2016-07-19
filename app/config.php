@@ -1,8 +1,11 @@
 <?php
-
+namespace app;
 class Config
 {
-private static $instance;
+    private static $instance;
+    /** @var bool
+     */
+    private $debug = false;
 
     private function __construct()
     {
@@ -19,15 +22,9 @@ private static $instance;
         return self::$instance;
     }
 
-    /** @var bool
-     */
-    private $debug = false;
-
-    public function setDebug($env = true)
+    public function isRelease()
     {
-        if (is_bool($env)) {
-            $this->debug = $env;
-        }
+        return !$this->isDebug();
     }
 
     public function isDebug()
@@ -35,9 +32,11 @@ private static $instance;
         return $this->debug;
     }
 
-    public function isRelease()
+    public function setDebug($env = true)
     {
-        return !$this->isDebug();
+        if (is_bool($env)) {
+            $this->debug = $env;
+        }
     }
 
 }

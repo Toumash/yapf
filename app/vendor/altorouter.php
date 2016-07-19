@@ -1,5 +1,5 @@
 <?php
-
+namespace app\vendor;
 /*
  * http://altorouter.com/
  */

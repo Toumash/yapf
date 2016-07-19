@@ -1,5 +1,5 @@
 <?php
-
+namespace app;
 /**
  * Class TempData
  * Used to store data to be accessed only once, just like ASP.NET TempData.

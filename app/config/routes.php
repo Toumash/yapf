@@ -1,4 +1,6 @@
 <?php
+use app\Config;
+use app\controller;
 // http://altorouter.com/usage/mapping-routes.html
 /*
 *                    // Match all request URIs
@@ -13,9 +15,17 @@
 [**:trailing]        // Catch all (possessive - will match the rest of the URI)
 .[:format]?          // Match an optional parameter 'format' - a / or . before the block is also optional
  */
-function standardDispatcher($params)
+/**
+ * @param $params array containing  action, controller, and params keys
+ * $params = [
+ * 'controller' => 'home',
+ * 'action'     => 'index',
+ * 'params'     => ['id' => 1 ]
+ * ]
+ */
+function standardDispatcher(array $params)
 {
-    $controller = "\\controller\\" . $params['controller'] . "_controller";
+    $controller = "\\app\\controller\\" . $params['controller'] . "_controller";
     $action = empty($params['action']) ? 'index' : $params['action'];
     if (file_exists(substr($controller, 1) . '.php')) {
         /** @var controller\controller $obj */
@@ -27,12 +37,13 @@ function standardDispatcher($params)
             if (Config::getInstance()->isDebug()) {
                 throw new BadMethodCallException("method $action not found in $controller");
             }
-            require '404.php';
+            show404();
         }
     } else {
-        require '404.php';
+        show404();
     }
 }
+use app\vendor\AltoRouter;
 
 function mapAllRoutes(AltoRouter $router)
 {

@@ -1,5 +1,5 @@
 <?php
-namespace view;
+namespace app\view;
 class ViewException extends \Exception
 {
 
