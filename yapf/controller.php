@@ -33,6 +33,7 @@ abstract class controller
         }
         extract($this->ViewBag, EXTR_OVERWRITE);
         require $this->getViewFilePath($_view_name);
+        return true;
     }
 
     /**

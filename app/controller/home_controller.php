@@ -5,6 +5,6 @@ class home_controller extends \yapf\controller
 {
     public function index()
     {
-        $this->view();
+        return $this->view();
     }
 }

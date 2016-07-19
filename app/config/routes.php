@@ -1,36 +1,9 @@
 <?php
 
-/**
- * @param $params array containing  action, controller, and params keys
- * $params = [
- * 'controller' => 'home',
- * 'action'     => 'index',
- * 'params'     => ['id' => 1 ]
- * ]
- */
-function standardDispatcher(array $params)
-{
-    $controller = "\\app\\controller\\" . $params['controller'] . "_controller";
-    $action = empty($params['action']) ? 'index' : $params['action'];
-    if (file_exists(substr($controller, 1) . '.php')) {
-        /** @var \yapf\controller $obj */
-        $obj = new $controller();
-        if (is_callable([$obj, $action])) {
-            $obj->setParams($params);
-            call_user_func_array([$obj, $action], [$params]);
-        } else {
-            if (\yapf\Config::getInstance()->isDebug()) {
-                throw new BadMethodCallException("method $action not found in $controller");
-            }
-            show404();
-        }
-    } else {
-        show404();
-    }
-}
-
-// http://altorouter.com/usage/mapping-routes.html
 /*
+ * http://altorouter.com/usage/mapping-routes.html
+ * For standard router handling (needed controller && action in route) use null as target)
+ * If you provide other string then function with such name will be called
 *                    // Match all request URIs
 [i]                  // Match an integer
 [i:id]               // Match an integer as 'id'
@@ -45,5 +18,15 @@ function standardDispatcher(array $params)
  */
 function app_map_routes(yapf\plugin\AltoRouter $router)
 {
-    $router->map('GET|POST|DELETE', '/[a:controller]/[a:action]?/[a:id]?', 'standardDispatcher');
+    # example route
+    # $router->map('GET|POST|DELETE', '/custom-route', 'example_custom_router');
+
+    # routes are executed in mappings order - place the most generic at the END
+    # default route. Usually will suffice, so don't remove unless you know what are you doing
+    $router->map('GET|POST|DELETE', '/[a:controller]/[a:action]?/[a:id]?', null);
 }
+
+/*function example_custom_router()
+{
+    (new \app\controller\home_controller())->index();
+}*/
