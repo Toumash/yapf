@@ -20,9 +20,9 @@ function standardDispatcher($params)
     if (file_exists(substr($controller, 1) . '.php')) {
         /** @var controller\controller $obj */
         $obj = new $controller();
-        if (is_callable(array($obj, $action))) {
+        if (is_callable([$obj, $action])) {
             $obj->setParams($params);
-            call_user_func_array(array($obj, $action), array($params));
+            call_user_func_array([$obj, $action], [$params]);
         } else {
             if (Config::getInstance()->isDebug()) {
                 throw new BadMethodCallException("method $action not found in $controller");
@@ -34,7 +34,6 @@ function standardDispatcher($params)
     }
 }
 
-;
 function mapAllRoutes(AltoRouter $router)
 {
     $router->map('GET|POST|DELETE', '/[a:controller]/[a:action]?/[a:id]?', 'standardDispatcher');

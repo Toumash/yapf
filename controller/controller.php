@@ -15,7 +15,7 @@ abstract class controller
      * @var array
      * stores model data for a view
      */
-    protected $ViewBag = array();
+    protected $ViewBag = [];
 
     public function setParams(array $params)
     {
@@ -26,8 +26,11 @@ abstract class controller
      * @param $_view_name string - view name in view/CALLING_CLASS/view_name.php
      */
     // _view_name named with leading underscore to omit overrides by extract
-    public function view($_view_name)
+    public function view($_view_name = null)
     {
+        if (!isset($_view_name)) {
+            $_view_name = $this->getCaller(2);
+        }
         extract($this->ViewBag, EXTR_OVERWRITE);
         require $this->getViewFilePath($_view_name);
     }
@@ -69,5 +72,16 @@ abstract class controller
     public function isDelete()
     {
         return $_SERVER['REQUEST_METHOD'] == 'DELETE';
+    }
+
+    /**
+     * @param $depth integer depth = 1 -> calling function of getCaller. One more caller of caller of getCaller ;)
+     * @return string
+     */
+    protected function getCaller($depth = 1)
+    {
+        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+        $caller = isset($dbt[$depth]['function']) ? $dbt[$depth]['function'] : null;
+        return $caller;
     }
 }
