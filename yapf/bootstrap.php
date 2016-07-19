@@ -13,11 +13,13 @@ define('app_log', app . 'log' . DS);
 # generic error pages for production
 function show404()
 {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
     require web_root . DS . '404.php';
 }
 
 function show500()
 {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
     require web_root . DS . '500.php';
 }
 
