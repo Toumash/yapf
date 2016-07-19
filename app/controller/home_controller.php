@@ -8,10 +8,10 @@ class home_controller extends \yapf\controller
         return $this->view();
     }
 
-    public function self_check($id = '123', $name = 'toumash')
+    public function self_check(array $data)
     {
-        $this->ViewBag['id'] = $id;
-        $this->ViewBag['author'] = $name;
+        $this->ViewBag['id'] = $data['id'];
+        $this->ViewBag['author'] = $data['name'];
         return $this->view();
     }
 }

@@ -31,7 +31,7 @@ function custom_router($params)
     $obj = new \app\controller\home_controller();
     $obj->setParams($params);
     $action = 'self_check';
-    if (!call_user_func_array([$obj, $action], $params)) {
+    if (!call_user_func_array([$obj, $action], [$params])) {
         if (\yapf\Config::getInstance()->isDebug()) {
             throw new BadMethodCallException("method $action not found in {$obj->getControllerName()}");
         }
