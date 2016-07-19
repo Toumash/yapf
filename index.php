@@ -24,7 +24,7 @@ spl_autoload_register();
 
 use app\Config;
 use app\controller;
-use app\vendor\AltoRouter;
+use app\plugin\AltoRouter;
 
 $cfg = Config::getInstance();
 $cfg->setDebug(true);

@@ -43,7 +43,7 @@ function standardDispatcher(array $params)
         show404();
     }
 }
-use app\vendor\AltoRouter;
+use app\plugin\AltoRouter;
 
 function mapAllRoutes(AltoRouter $router)
 {

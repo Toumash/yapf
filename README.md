@@ -12,9 +12,10 @@ Clone the repository to your computer, configure stuff at `app/config` directory
     +---app
     |   +---config      # routing, db 
     |   +---controller  
+    |   +---helper      # your own files, which dont fall into controllers
     |   +---log         
-    |   +---model       
-    |   +---vendor      # 3rd party libs
+    |   +---model 
+    |   +---plugin      # 3rd party scripts
     |   \---view        # base for view files. Each controller has own folder in which 
     |       \---home    # there are files with names same as metho_names.php
     +---css
