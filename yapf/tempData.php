@@ -9,13 +9,16 @@ class TempData
 {
     public static function get($offset)
     {
-        $value = $_SESSION[$offset];
-        unset($_SESSION[$offset]);
-        return $value;
+        if (isset($_SESSION['tmp'])) {
+            $value = $_SESSION['tmp'][$offset];
+            unset($_SESSION['tmp'][$offset]);
+            return $value;
+        }
+        return null;
     }
 
     public static function set($offset, $value)
     {
-        $_SESSION[$offset] = $value;
+        $_SESSION['tmp'][$offset] = $value;
     }
 }

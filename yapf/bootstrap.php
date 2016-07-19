@@ -23,6 +23,7 @@ function show500()
     require web_root . DS . '500.php';
 }
 
+# fires when there is something wrong with routes.php file
 class BadRouteException extends \Exception
 {
 }

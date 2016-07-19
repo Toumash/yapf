@@ -193,10 +193,10 @@
 
             <div class="inner cover">
                 <h1 class="cover-heading">yapf</h1>
-                <p class="lead">Received ID: <?php echo $id;?></p>
+                <p class="lead">Received ID: <?php echo $id; ?></p>
                 <p class="lead">If above id is equal to the one specified in the address bar - then routing is set up
                     correctly.</p>
-                <p class="lead">Author: <?php echo $author;?></p>
+                <p class="lead">Author: <?php echo $author; ?></p>
                 <p class="lead">
                     <a href="https://bitbucket.org/Toumash/yapf" class="btn btn-lg btn-secondary">start today!</a>
                 </p>
