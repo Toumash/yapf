@@ -1,8 +1,8 @@
 <?php
 
-namespace app\controller;
+namespace yapf;
 
-use view\ViewException;
+use yapf\view\ViewException;
 
 abstract class controller
 {
@@ -35,24 +35,32 @@ abstract class controller
         require $this->getViewFilePath($_view_name);
     }
 
+    /**
+     * @param $depth integer depth = 1 -> calling function of getCaller. One more caller of caller of getCaller ;)
+     * @return string
+     */
+    protected function getCaller($depth = 1)
+    {
+        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+        $caller = isset($dbt[$depth]['function']) ? $dbt[$depth]['function'] : null;
+        return $caller;
+    }
+
     private function getViewFilePath($view_name)
     {
+        $view_ext = Config::getInstance()->getViewExtension();
         # fastest way to get callers base class name without namespaces
         $class_name = (new \ReflectionClass($this))->getShortName();
         # gets everything before _controller name
         $class_name = substr($class_name, 0, strpos($class_name, '_'));
-        $file = app . DS
-            . 'view' . DS
-            . $class_name . DS
-            . $view_name . '.php';
+        $file = app_view . $class_name . DS
+            . $view_name . $view_ext;
         if (file_exists($file)) {
             return $file;
         }
 
-        $file = app . DS
-            . 'view' . DS
-            . '_shared' . DS
-            . $view_name . '.php';
+        $file = app_view . '_shared' . DS
+            . $view_name . $view_ext;
         if (file_exists($file)) {
             return $file;
         }
@@ -72,16 +80,5 @@ abstract class controller
     public function isDelete()
     {
         return $_SERVER['REQUEST_METHOD'] == 'DELETE';
-    }
-
-    /**
-     * @param $depth integer depth = 1 -> calling function of getCaller. One more caller of caller of getCaller ;)
-     * @return string
-     */
-    protected function getCaller($depth = 1)
-    {
-        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
-        $caller = isset($dbt[$depth]['function']) ? $dbt[$depth]['function'] : null;
-        return $caller;
     }
 }

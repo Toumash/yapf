@@ -1,5 +1,5 @@
 <?php
-namespace app\view;
+namespace yapf\view;
 class ViewException extends \Exception
 {
 

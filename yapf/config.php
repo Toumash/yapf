@@ -1,11 +1,12 @@
 <?php
-namespace app;
+namespace yapf;
 class Config
 {
     private static $instance;
     /** @var bool
      */
     private $debug = false;
+    private $view_ext = '.tpl.php';
 
     private function __construct()
     {
@@ -36,6 +37,18 @@ class Config
     {
         if (is_bool($env)) {
             $this->debug = $env;
+        }
+    }
+
+    public function getViewExtension()
+    {
+        return $this->view_ext;
+    }
+
+    public function setViewExtension($ext)
+    {
+        if (is_string($ext)) {
+            $this->view_ext = $ext;
         }
     }
 

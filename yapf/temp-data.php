@@ -1,5 +1,5 @@
 <?php
-namespace app;
+namespace yapf;
 /**
  * Class TempData
  * Used to store data to be accessed only once, just like ASP.NET TempData.

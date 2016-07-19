@@ -1,5 +1,5 @@
 <?php
-namespace app\plugin;
+namespace yapf\plugin;
 /*
  * http://altorouter.com/
  */
