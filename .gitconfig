@@ -1,0 +1,2 @@
+[alias]
+    tree = log --graph --oneline --all --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen%cr%Creset %C(cyan)%an%Creset %gn'
