@@ -28,7 +28,6 @@ class BadRouteException extends \Exception
 {
 }
 
-use app\controller;
 use yapf\Config;
 use yapf\plugin\AltoRouter;
 
@@ -93,7 +92,9 @@ $router->setBasePath('');
 
 # default controller
 $router->map('GET', '/', function () {
-    $obj = new controller\home_controller();
+    $default_name = Config::getInstance()->getDefaultController();
+    $controller = "\\app\\controller\\${default_name}_controller";
+    $obj = new $controller();
     $obj->index();
 });
 

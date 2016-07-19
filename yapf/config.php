@@ -3,10 +3,10 @@ namespace yapf;
 class Config
 {
     private static $instance;
-    /** @var bool
-     */
+
     private $debug = false;
-    private $view_ext = '.tpl.php';
+    private $view_extension = '.tpl.php';
+    private $default_controller = 'home';
 
     private function __construct()
     {
@@ -21,6 +21,22 @@ class Config
             self::$instance = new $c();
         }
         return self::$instance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultController()
+    {
+        return $this->default_controller;
+    }
+
+    /**
+     * @param string $default_controller
+     */
+    public function setDefaultController($default_controller = 'home')
+    {
+        $this->default_controller = $default_controller;
     }
 
     public function isRelease()
@@ -40,15 +56,22 @@ class Config
         }
     }
 
+    public function setRelease($env = false)
+    {
+        if (is_bool($env)) {
+            $this->debug = !$env;
+        }
+    }
+
     public function getViewExtension()
     {
-        return $this->view_ext;
+        return $this->view_extension;
     }
 
     public function setViewExtension($ext)
     {
         if (is_string($ext)) {
-            $this->view_ext = $ext;
+            $this->view_extension = $ext;
         }
     }
 
