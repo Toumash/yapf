@@ -1,5 +1,4 @@
 <?php
-
 /*
  * http://altorouter.com/usage/mapping-routes.html
  * For standard router handling (needed controller && action in route) use null as target)
@@ -15,9 +14,12 @@
 [*:trailing]         // Catch all as 'trailing' (lazy)
 [**:trailing]        // Catch all (possessive - will match the rest of the URI)
 .[:format]?          // Match an optional parameter 'format' - a / or . before the block is also optional
+use @ (at) to provide your own regex
  */
 function app_map_routes(yapf\plugin\AltoRouter $router)
 {
+    # routes are executed in mappings order - place the most generic at the END
+
     # example route
     $router->map('GET|POST|DELETE', '/routing_check/[i:id]?/[a:name]?', 'custom_router');
 

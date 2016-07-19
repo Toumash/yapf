@@ -1,12 +1,20 @@
+
 # YAPF #
-Yet Another PHP Framework
+Yet Another PHP Framework  
+[bitbucket.org/toumash/yapf](https://bitbucket.org/Toumash/yapf/overview)
 
 ## Goal ##
 The goal here was to provide simple php lightweight framework to start with when doing repetivive, small projects. 
 Its ideal for school projects, even for small companies, which want to build simple, fast and cheap interactive web sites.
 
 ## Installation ##
-Clone the repository to your computer, configure stuff at `app/config` directory and write your app using  PHP5 MVC!
+ - `git clone https://Toumash@bitbucket.org/Toumash/yapf.git`  
+ - basic configuration `app/config/configuration.php` (**samples provided**)
+ - examples everywhere - you wont get lost ;\) 
+ - [OPTIONAL] Set-up database connection data at `app/config/database.ini.php`
+ - [OPTIONAL] Set-up custom routing at `/app/config/routes.php`
+ - report issues at [bitbucket yapf project](https://bitbucket.org/Toumash/yapf/issues)
+ - **PROFIT (???)**
 
 ## Structure ##
     +---app

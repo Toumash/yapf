@@ -2,7 +2,6 @@
 
 namespace yapf;
 
-use yapf\view\ViewException;
 
 abstract class controller
 {
