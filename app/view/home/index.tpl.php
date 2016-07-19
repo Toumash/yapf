@@ -185,7 +185,7 @@
                     <h3 class="masthead-brand">It works!</h3>
                     <nav class="nav nav-masthead">
                         <a class="nav-link active" href="/">Home</a>
-                        <a class="nav-link" href="/check-routing/420">Self-check</a>
+                        <a class="nav-link" href="/routing_check/420/toumash">Self-check</a>
                         <a class="nav-link" href="https://bitbucket.org/Toumash/yapf/overview">Readme</a>
                     </nav>
                 </div>

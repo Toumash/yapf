@@ -19,7 +19,7 @@
 function app_map_routes(yapf\plugin\AltoRouter $router)
 {
     # example route
-    $router->map('GET|POST|DELETE', '/check-routing/[i:id]?/[a:name]?', 'custom_router');
+    $router->map('GET|POST|DELETE', '/routing_check/[i:id]?/[a:name]?', 'custom_router');
 
     # routes are executed in mappings order - place the most generic at the END
     # default route. Usually will suffice, so don't remove unless you know what are you doing
@@ -30,5 +30,11 @@ function custom_router($params)
 {
     $obj = new \app\controller\home_controller();
     $obj->setParams($params);
-    call_user_func_array([$obj, 'self_check'], $params);
+    $action = 'self_check';
+    if (!call_user_func_array([$obj, $action], $params)) {
+        if (\yapf\Config::getInstance()->isDebug()) {
+            throw new BadMethodCallException("method $action not found in {$obj->getControllerName()}");
+        }
+        show404();
+    }
 }

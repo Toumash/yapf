@@ -50,11 +50,8 @@ abstract class controller
     private function getViewFilePath($view_name)
     {
         $view_ext = Config::getInstance()->getViewExtension();
-        # fastest way to get callers base class name without namespaces
-        $class_name = (new \ReflectionClass($this))->getShortName();
-        # gets everything before _controller name
-        $class_name = substr($class_name, 0, strpos($class_name, '_'));
-        $file = app_view . $class_name . DS
+        $controller_name = $this->getControllerName();
+        $file = app_view . $controller_name . DS
             . $view_name . $view_ext;
         if (file_exists($file)) {
             return $file;
@@ -65,7 +62,16 @@ abstract class controller
         if (file_exists($file)) {
             return $file;
         }
-        throw new ViewException("No view found for " . $class_name . ' view:' . $view_name);
+        throw new ViewException("No view found for " . $controller_name . ' view:' . $view_name);
+    }
+
+    public function getControllerName()
+    {
+        # fastest way to get callers base class name without namespaces
+        $class_name = (new \ReflectionClass($this))->getShortName();
+        # gets everything before _controller name
+        $controller_name = substr($class_name, 0, strpos($class_name, '_'));
+        return $controller_name;
     }
 
     public function isPost()

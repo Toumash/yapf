@@ -69,13 +69,13 @@ function standard_router(array $params)
 {
     $controller = "\\app\\controller\\" . $params['controller'] . "_controller";
     $action = empty($params['action']) ? 'index' : $params['action'];
-    if (file_exists(substr($controller, 1) . '.php')) {
+
+    if (file_exists(str_replace("\\", DS, substr($controller, 1)) . '.php')) {
+        require str_replace("\\", DS, substr($controller, 1)) . '.php';
         /** @var \yapf\controller $obj */
         $obj = new $controller();
-        if (is_callable([$obj, $action])) {
-            $obj->setParams($params);
-            call_user_func_array([$obj, $action], [$params]);
-        } else {
+        $obj->setParams($params);
+        if (!call_user_func_array([$obj, $action], [$params])) {
             if (\yapf\Config::getInstance()->isDebug()) {
                 throw new BadMethodCallException("method $action not found in $controller");
             }

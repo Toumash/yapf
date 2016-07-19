@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -185,7 +186,7 @@
                     <h3 class="masthead-brand">It works!</h3>
                     <nav class="nav nav-masthead">
                         <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link active" href="/check-routing/420">Self-check</a>
+                        <a class="nav-link active" href="/routing_check/420/toumash">Self-check</a>
                         <a class="nav-link" href="https://bitbucket.org/Toumash/yapf/overview">Readme</a>
                     </nav>
                 </div>
