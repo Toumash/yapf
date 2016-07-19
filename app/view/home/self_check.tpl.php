@@ -184,8 +184,8 @@
                 <div class="inner">
                     <h3 class="masthead-brand">It works!</h3>
                     <nav class="nav nav-masthead">
-                        <a class="nav-link active" href="/">Home</a>
-                        <a class="nav-link" href="/check-routing/420">Self-check</a>
+                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link active" href="/check-routing/420">Self-check</a>
                         <a class="nav-link" href="https://bitbucket.org/Toumash/yapf/overview">Readme</a>
                     </nav>
                 </div>
@@ -193,8 +193,10 @@
 
             <div class="inner cover">
                 <h1 class="cover-heading">yapf</h1>
-                <p class="lead">Yet Another PHP Framework.</p>
-                <p class="lead">Create your simple pages using simple, lightweight php5 mvc template by toumash</p>
+                <p class="lead">Received ID: <?php echo $id;?></p>
+                <p class="lead">If above id is equal to the one specified in the address bar - then routing is set up
+                    correctly.</p>
+                <p class="lead">Author: <?php echo $author;?></p>
                 <p class="lead">
                     <a href="https://bitbucket.org/Toumash/yapf" class="btn btn-lg btn-secondary">start today!</a>
                 </p>
