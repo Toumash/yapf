@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -10,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon"/>
 
-    <title>yapf - PHP Framework</title>
+    <title><?php echo $this->ViewBag['title']; ?></title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
@@ -185,23 +184,20 @@
                 <div class="inner">
                     <h3 class="masthead-brand">It works!</h3>
                     <nav class="nav nav-masthead">
-                        <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link active" href="/routing_check/420/toumash">Self-check</a>
+                        <a class="nav-link active" href="/">Home</a>
+                        <a class="nav-link" href="/routing_check/420/toumash">Self-check</a>
                         <a class="nav-link" href="https://bitbucket.org/Toumash/yapf/overview">Readme</a>
                     </nav>
                 </div>
             </div>
 
-            <div class="inner cover">
-                <h1 class="cover-heading">yapf</h1>
-                <p class="lead">Received ID: <?php echo $this->ViewBag['id']; ?></p>
-                <p class="lead">If above id is equal to the one specified in the address bar - then routing is set up
-                    correctly.</p>
-                <p class="lead">Author: <?php echo $this->ViewBag['author']; ?></p>
-                <p class="lead">
-                    <a href="https://bitbucket.org/Toumash/yapf" class="btn btn-lg btn-secondary">start today!</a>
-                </p>
-            </div>
+
+            <?php
+
+            $this->renderBody();
+
+            ?>
+
 
             <div class="mastfoot">
                 <div class="inner">
@@ -215,11 +211,10 @@
     </div>
 
 </div>
+<?php
 
+$this->renderSection('scripts', false);
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
+?>
 </body>
 </html>

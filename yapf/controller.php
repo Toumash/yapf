@@ -25,14 +25,20 @@ abstract class controller
      * @param $_view_name string - view name in view/CALLING_CLASS/view_name.php
      */
     // _view_name named with leading underscore to omit overrides by extract
-    public function view($_view_name = null)
+    /**
+     * @param string|null $view_name
+     * @return View
+     */
+    public function view($view_name = null)
     {
-        if (!isset($_view_name)) {
-            $_view_name = $this->getCaller(2);
+        if (!isset($view_name)) {
+            $view_name = $this->getCaller(2);
         }
-        extract($this->ViewBag, EXTR_OVERWRITE);
-        require $this->getViewFilePath($_view_name);
-        return true;
+        $view = new View();
+        $view->setTemplate($view_name, $this->getControllerName());
+        $view->setData($this->ViewBag);
+
+        $view->render();
     }
 
     /**
@@ -41,27 +47,9 @@ abstract class controller
      */
     protected function getCaller($depth = 1)
     {
-        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3); // FIXME
         $caller = isset($dbt[$depth]['function']) ? $dbt[$depth]['function'] : null;
         return $caller;
-    }
-
-    private function getViewFilePath($view_name)
-    {
-        $view_ext = Config::getInstance()->getViewExtension();
-        $controller_name = $this->getControllerName();
-        $file = app_view . $controller_name . DS
-            . $view_name . $view_ext;
-        if (file_exists($file)) {
-            return $file;
-        }
-
-        $file = app_view . '_shared' . DS
-            . $view_name . $view_ext;
-        if (file_exists($file)) {
-            return $file;
-        }
-        throw new ViewException("No view found for " . $controller_name . ' view:' . $view_name);
     }
 
     public function getControllerName()
