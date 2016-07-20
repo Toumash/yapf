@@ -3,19 +3,20 @@
 Yet Another PHP Framework  
 [bitbucket.org/toumash/yapf](https://bitbucket.org/Toumash/yapf/overview)
 
-## Goal ##
+# Goal #
 The goal here was to provide simple php lightweight framework to start with when doing repetivive, small projects. 
 Its ideal for school projects, even for small companies, which want to build simple, fast and cheap interactive web sites.
 
 ## Features ##
  
- - [x] Simple MVC structure
- - [ ] Regex Routing engine (AltoRouter)
- - [x] Templating system with stacking layouts and sections
- - [ ] Examples for everything
- - [ ] Multiple realms (subdirectories/subprojects) support `/projx/home/index`
+ - [x] Simple MVC structure  
+ - [ ] Regex Routing engine (AltoRouter)  
+ - [x] Templating system with stacking layouts and sections  
+ - [ ] Examples for everything  
+ - [ ] Multiple realms (subdirectories/subprojects) support `/projx/home/index`  
  
- #### todo ####
+ 
+ **todo**
  
  - simple routing system, which handles Response classes returned from controller
  - more examples
