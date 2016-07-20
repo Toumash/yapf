@@ -48,24 +48,30 @@ class View
 
     public function setTemplate($view_name, $controller_name = '')
     {
-        $this->path = $this->getViewFilePath($view_name, $controller_name);
+        $this->path = $this->resolvePath($view_name, $controller_name);
     }
 
-    private function getViewFilePath($view_name, $controller_name = '')
+    private function resolvePath($view_name, $controller_name = '')
     {
-        $view_ext = Config::getInstance()->getViewExtension();
-        $file = app_view . $controller_name . DS
-            . $view_name . $view_ext;
-        if (file_exists($file)) {
-            return $file;
-        }
+        $extension = Config::getInstance()->getViewExtension();
 
-        $file = app_view . '_shared' . DS
-            . $view_name . $view_ext;
-        if (file_exists($file)) {
-            return $file;
+        $search_path = [];
+        # this one with controller name MUST be first
+        # 1. direct controller/method.ext
+        if (!empty($controller_name))
+            $search_path[] = app_view . $controller_name . DS . $view_name . $extension;
+        # 2. directly view/$view_name.exe
+        $search_path[] = app_view . str_replace('/', DIRECTORY_SEPARATOR, ltrim($view_name, '/')) . $extension;
+        # 3. _shared/method.ext
+        $search_path[] = app_view . '_shared' . DS . $view_name . $extension;
+
+        foreach ($search_path as $view_filename) {
+            if (file_exists($view_filename)) {
+                return $view_filename;
+            }
         }
-        throw new ViewException("No view found for " . $controller_name . ' view:' . $view_name);
+        throw new ViewResolverException("No view found for [$controller_name] view: [$view_name]. searched locations:"
+            . implode(';', $search_path));
     }
 
     public function renderSection($name)
