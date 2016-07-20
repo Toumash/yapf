@@ -7,12 +7,26 @@ Yet Another PHP Framework
 The goal here was to provide simple php lightweight framework to start with when doing repetivive, small projects. 
 Its ideal for school projects, even for small companies, which want to build simple, fast and cheap interactive web sites.
 
+## Features ##
+ 
+ - [x] Simple MVC structure
+ - [ ] Regex Routing engine (AltoRouter)
+ - [x] Templating system with stacking layouts and sections
+ - [ ] Examples for everything
+ - [ ] Multiple realms (subdirectories/subprojects) support `/projx/home/index`
+ 
+ #### todo ####
+ 
+ - simple routing system, which handles Response classes returned from controller
+ - more examples
+
+
 ## Installation ##
  - `git clone https://Toumash@bitbucket.org/Toumash/yapf.git`  
  - basic configuration `app/config/configuration.php` (**samples provided**)
  - examples everywhere - you wont get lost ;\) 
- - [OPTIONAL] Set-up database connection data at `app/config/database.ini.php`
- - [OPTIONAL] Set-up custom routing at `/app/config/routes.php`
+ - \[OPTIONAL\] Set-up database connection data at `app/config/database.ini.php`
+ - \[OPTIONAL\] Set-up custom routing at `/app/config/routes.php`
  - report issues at [bitbucket yapf project](https://bitbucket.org/Toumash/yapf/issues)
  - **PROFIT (???)**
 
