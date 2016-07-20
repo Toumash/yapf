@@ -61,6 +61,34 @@ abstract class controller
         return $controller_name;
     }
 
+    public function json(array $data, $options = 0, $depth = 512)
+    {
+        echo json_encode($data, $options, $depth);
+    }
+
+    public function status($code = 200)
+    {
+        return http_response_code($code);
+    }
+
+    function xml($root_name, array $data)
+    {
+        $object = new \SimpleXMLElement("<$root_name/>");
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $new_object = $object->addChild($key);
+                to_xml($new_object, $value);
+            } else {
+                $object->addChild($key, $value);
+            }
+        }
+    }
+
+    public function content($content_string)
+    {
+        echo $content_string;
+    }
+
     public function isPost()
     {
         return $_SERVER['REQUEST_METHOD'] == 'POST';
