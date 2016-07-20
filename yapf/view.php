@@ -48,6 +48,9 @@ class View
 
     public function setTemplate($view_name, $controller_name = '')
     {
+        if (empty($view_name)) {
+            $this->path = '';
+        }
         $this->path = $this->resolvePath($view_name, $controller_name);
     }
 
@@ -85,9 +88,9 @@ class View
     public function render()
     {
         $this->buffer = '';
-        while (isset($this->path)) {
+        while (!empty($this->path)) {
             $load = $this->path;
-            $this->path = null;
+            $this->path = '';
             ob_start();
             require $load;
             $this->buffer = ob_get_clean();
