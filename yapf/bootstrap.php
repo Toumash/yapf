@@ -78,7 +78,8 @@ function standard_route(array $params)
         $obj->setParams($params);
 
         if (is_callable([$obj, $action])) {
-            $obj->$action($params);
+            $rq = \yapf\Request::standard($params);
+            $obj->$action($rq);
         } else {
             show404();
             if (\yapf\Config::getInstance()->isDebug()) {
@@ -110,7 +111,7 @@ require app_config . 'routes.php';
 app_map_routes($router);
 # to allow links like /home/ not only /home
 $requestUrl = isset($_SERVER['REQUEST_URI']) ? rtrim($_SERVER['REQUEST_URI'], '/') : '/';
-if(empty($requestUrl)){
+if (empty($requestUrl)) {
     $requestUrl = '/';
 }
 $match = $router->match($requestUrl);

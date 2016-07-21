@@ -36,7 +36,8 @@ function custom_router($params)
     $obj->setParams($params);
     $action = 'selfCheck';
     if (is_callable([$obj, $action])) {
-        $obj->$action($params);
+        $rq = \yapf\Request::standard($params);
+        $obj->$action($rq);
     } else {
         if (\yapf\Config::getInstance()->isDebug()) {
             throw new BadMethodCallException("method $action not found in {$obj->getControllerName()}");

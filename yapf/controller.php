@@ -64,6 +64,7 @@ abstract class controller
     public function json(array $data, $options = 0, $depth = 512)
     {
         echo json_encode($data, $options, $depth);
+        return true;
     }
 
     public function statusCode($code = 200)
@@ -78,6 +79,7 @@ abstract class controller
             throw new ViewRendererException("Cannot create xml message");
         }
         echo $xml;
+        return true;
     }
 
     private function to_xml($root_name, array $data)
@@ -97,6 +99,7 @@ abstract class controller
     public function content($content_string)
     {
         echo $content_string;
+        return true;
     }
 
     public function isPost()
