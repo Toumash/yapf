@@ -27,7 +27,8 @@
                     </h3>
                     <nav class="nav nav-masthead">
                         <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link" href="/routing_check/420/toumash">Self-check</a>
+                        <a class="nav-link" href="/RoutingCheck/420/toumash">Routes</a>
+                        <a class="nav-link" href="/Home/JsonTest/1337">Json</a>
                         <a class="nav-link" href="https://bitbucket.org/Toumash/yapf/overview">Readme</a>
                     </nav>
                 </div>
@@ -49,7 +50,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
 <?php
-$this->renderstylesSection('scripts', false);
+$this->renderSection('scripts', false);
 ?>
 </body>
 </html>

@@ -27,12 +27,12 @@ class View
         echo $this->buffer;
     }
 
-    public function start_section()
+    public function startSection()
     {
         ob_start();
     }
 
-    public function end_section($name)
+    public function endSection($name)
     {
         if (!isset($this->sections[$name])) {
             $this->sections[$name] = [];
@@ -42,7 +42,6 @@ class View
 
     public function layout($view_name, $controller = '')
     {
-
         $this->setTemplate($view_name, $controller);
     }
 
@@ -50,8 +49,9 @@ class View
     {
         if (empty($view_name)) {
             $this->path = '';
+        }else {
+            $this->path = $this->resolvePath($view_name, $controller_name);
         }
-        $this->path = $this->resolvePath($view_name, $controller_name);
     }
 
     private function resolvePath($view_name, $controller_name = '')
@@ -73,16 +73,20 @@ class View
                 return $view_filename;
             }
         }
-        throw new ViewResolverException("No view found for [$controller_name] view: [$view_name]. searched locations:"
+        throw new ViewRendererException("No view found for [$controller_name] view: [$view_name]. searched locations:"
             . implode(';', $search_path));
     }
 
-    public function renderSection($name)
+    public function renderSection($name, $required = false)
     {
-        foreach ($this->sections[$name] as $part) {
-            echo $part;
+        if (isset($this->sections[$name])) {
+            foreach ($this->sections[$name] as $part) {
+                echo $part;
+            }
+            unset($this->sections[$name]);
+        } else if ($required) {
+            throw new ViewRendererException("Couldn't find required section $name");
         }
-        unset($this->sections[$name]);
     }
 
     public function render()

@@ -14,4 +14,9 @@ class home_controller extends \yapf\controller
         $this->ViewBag['author'] = $data['name'];
         return $this->view('home\self_check');
     }
+
+    public function jsonTest(array $data)
+    {
+        return $this->json($data);
+    }
 }

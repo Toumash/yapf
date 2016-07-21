@@ -21,7 +21,7 @@ function app_map_routes(yapf\plugin\AltoRouter $router)
     # routes are executed in mappings order - place the most generic at the END
 
     # example route
-    $router->map('GET|POST|DELETE', '/routing_check/[i:id]?/[a:name]?', 'custom_router');
+    $router->map('GET|POST|DELETE', '/RoutingCheck/[i:id]?/[a:name]?', 'custom_router');
 
     # routes are executed in mappings order - place the most generic at the END
     # default route. Usually will suffice, so don't remove unless you know what are you doing

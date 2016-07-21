@@ -12,8 +12,8 @@ $this->ViewBag['page-title'] = 'Home';
     </p>
 </div>
 
-<?php $this->start_section(); ?>
+<?php $this->startSection(); ?>
 <script>
     // here you can deploy your own scripts which will go to the scripts section on the page
 </script>
-<?php $this->end_section('scripts'); ?>
+<?php $this->endSection('scripts'); ?>
