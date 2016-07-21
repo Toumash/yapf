@@ -21,6 +21,8 @@ function app_map_routes(yapf\plugin\AltoRouter $router)
     # routes are executed in mappings order - place the most generic at the END
 
     # example route
+    $router->map('GET|POST|DELETE', '/RoutingCheck', 'custom_router');
+
     $router->map('GET|POST|DELETE', '/RoutingCheck/[i:id]?/[a:name]?', 'custom_router');
 
     # routes are executed in mappings order - place the most generic at the END
@@ -30,9 +32,9 @@ function app_map_routes(yapf\plugin\AltoRouter $router)
 
 function custom_router($params)
 {
-    $obj = new \app\controller\home_controller();
+    $obj = new \app\controller\example_controller();
     $obj->setParams($params);
-    $action = 'self_check';
+    $action = 'selfCheck';
     if (is_callable([$obj, $action])) {
         $obj->$action($params);
     } else {

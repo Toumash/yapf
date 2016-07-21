@@ -29,8 +29,7 @@
                     </h3>
                     <nav class="nav nav-masthead">
                         <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link" href="/RoutingCheck/420/toumash">Routes</a>
-                        <a class="nav-link" href="/Home/JsonTest/1337">Json</a>
+                        <a class="nav-link" href="/example/">Examples</a>
                         <a class="nav-link" href="https://bitbucket.org/Toumash/yapf/overview">Readme</a>
                     </nav>
                 </div>

@@ -64,6 +64,7 @@ if ($cfg->isDebug()) {
  * 'action'     => 'index',
  * 'params'     => ['id' => 1 ]
  * ]
+ * @throws BadRouteException
  */
 function standard_route(array $params)
 {
@@ -79,13 +80,14 @@ function standard_route(array $params)
         if (is_callable([$obj, $action])) {
             $obj->$action($params);
         } else {
-            if (\yapf\Config::getInstance()->isDebug()) {
-                throw new BadMethodCallException("method $action not found in $controller");
-            }
             show404();
+            if (\yapf\Config::getInstance()->isDebug()) {
+                throw new BadRouteException("method $action not found in $controller");
+            }
         }
     } else {
         show404();
+        throw new BadRouteException("No controller with name: [$controller]");
     }
 }
 
@@ -106,8 +108,12 @@ $router->map('GET', '/', function () {
 # user configured routes
 require app_config . 'routes.php';
 app_map_routes($router);
-
-$match = $router->match();
+# to allow links like /home/ not only /home
+$requestUrl = isset($_SERVER['REQUEST_URI']) ? rtrim($_SERVER['REQUEST_URI'], '/') : '/';
+if(empty($requestUrl)){
+    $requestUrl = '/';
+}
+$match = $router->match($requestUrl);
 if ($match === false) {
     # route not found
     show404();
