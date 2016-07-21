@@ -19,4 +19,18 @@ class home_controller extends \yapf\controller
     {
         return $this->json($data);
     }
+
+    public function xmlTest()
+    {
+        $data = [
+            'author' => 'toumash',
+            'date' => date('d-m-y')
+        ];
+        return $this->xml('data', $data);
+    }
+
+    public function status()
+    {
+        return $this->statusCode(418);
+    }
 }

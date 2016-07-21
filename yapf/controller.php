@@ -66,22 +66,32 @@ abstract class controller
         echo json_encode($data, $options, $depth);
     }
 
-    public function status($code = 200)
+    public function statusCode($code = 200)
     {
         return http_response_code($code);
     }
 
-    function xml($root_name, array $data)
+    public function xml($root_name, array $data)
+    {
+        $xml = $this->to_xml($root_name, $data);
+        if ($xml === false) {
+            throw new ViewRendererException("Cannot create xml message");
+        }
+        echo $xml;
+    }
+
+    private function to_xml($root_name, array $data)
     {
         $object = new \SimpleXMLElement("<$root_name/>");
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $new_object = $object->addChild($key);
-                to_xml($new_object, $value);
+                $this->to_xml($new_object, $value);
             } else {
                 $object->addChild($key, $value);
             }
         }
+        return $object->asXML();
     }
 
     public function content($content_string)

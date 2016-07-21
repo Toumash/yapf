@@ -5,10 +5,13 @@ $this->ViewBag['page-title'] = 'Routes';
 ?>
 <div class="inner cover">
     <h1 class="cover-heading">yapf</h1>
-    <p class="lead">Received ID: <?php echo $this->ViewBag['id']; ?></p>
-    <p class="lead">If above id is equal to the one specified in the address bar - then routing is set up
-        correctly.</p>
-    <p class="lead">Author: <?php echo $this->ViewBag['author']; ?></p>
+    <p class="lead"><strong>Parameters:</strong></p>
+    <p class="lead">ID: <?php echo $this->ViewBag['id']; ?><br/>
+        Author: <?php echo $this->ViewBag['author']; ?></p>
+    <p class="lead">This page is intended to be simple text, if you want it to be with layout change line:<br/>
+        $this->layout(''); <br/>
+        to <br/>
+        $this->layout('/home/_layout');</p>
     <p class="lead">
         <a href="https://bitbucket.org/Toumash/yapf" class="btn btn-lg btn-secondary">start today!</a>
     </p>

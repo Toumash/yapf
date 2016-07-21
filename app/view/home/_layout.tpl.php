@@ -22,7 +22,9 @@
                 <div class="inner">
                     <h3 class="masthead-brand">
                         <?php
-                        echo(isset($this->ViewBag['page-title']) ? $this->ViewBag['page-title'] : $this->ViewBag['title']);
+                        echo(isset($this->ViewBag['page-title'])
+                            ? $this->ViewBag['page-title']
+                            : $this->ViewBag['title']);
                         ?>
                     </h3>
                     <nav class="nav nav-masthead">
