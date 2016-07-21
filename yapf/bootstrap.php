@@ -65,7 +65,7 @@ if ($cfg->isDebug()) {
  * 'params'     => ['id' => 1 ]
  * ]
  */
-function standard_router(array $params)
+function standard_route(array $params)
 {
     $controller = "\\app\\controller\\" . $params['controller'] . "_controller";
     $action = empty($params['action']) ? 'index' : $params['action'];
@@ -75,7 +75,10 @@ function standard_router(array $params)
         /** @var \yapf\controller $obj */
         $obj = new $controller();
         $obj->setParams($params);
-        if (!call_user_func_array([$obj, $action], [$params])) {
+
+        if (is_callable([$obj, $action])) {
+            $obj->$action($params);
+        } else {
             if (\yapf\Config::getInstance()->isDebug()) {
                 throw new BadMethodCallException("method $action not found in $controller");
             }
@@ -90,12 +93,14 @@ function standard_router(array $params)
 $router = new AltoRouter();
 $router->setBasePath('');
 
-# default controller
+# default route/index page
 $router->map('GET', '/', function () {
-    $default_name = Config::getInstance()->getDefaultController();
-    $controller = "\\app\\controller\\${default_name}_controller";
-    $obj = new $controller();
-    $obj->index();
+    $controller = Config::getInstance()->getDefaultController();
+    standard_route(
+        ['controller' => $controller,
+            'action' => 'index',
+            'params' => []
+        ]);
 });
 
 # user configured routes
@@ -111,7 +116,7 @@ if ($match === false) {
 session_start();
 # runs the closures from the routes array
 if (is_null($match['target']) || empty($match['target'])) {
-    standard_router($match['params']);
+    standard_route($match['params']);
 } else if (is_callable($match['target'])) {
     $match['target']($match['params']);
 } else {
