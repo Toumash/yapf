@@ -1,5 +1,6 @@
 <?php
 $this->layout('example/_layout');
+$this->ViewBag['title'] = 'Examples | yapf';
 ?>
 <div class="page-header">
     <h1>Yapf Examples</h1>

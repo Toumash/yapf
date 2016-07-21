@@ -12,6 +12,7 @@
     <title><?php echo $this->ViewBag['title']; ?></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
+    <?php $this->renderSection('styles'); ?>
     <style>
         /* Sticky footer styles
     -------------------------------------------------- */
@@ -32,6 +33,7 @@
             /* Set the fixed height of the footer here */
             height: 60px;
             background-color: #f5f5f5;
+            color: rgba(168, 168, 168, 0.37);
         }
 
         /* Custom page CSS
@@ -46,6 +48,10 @@
 
         .container .text-muted {
             margin: 20px 0;
+        }
+
+        a {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -65,11 +71,9 @@
     </div>
 </footer>
 
-
-<!-- Bootstrap core JavaScript
-================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
+<?php $this->renderSection('scripts'); ?>
 </body>
 </html>
