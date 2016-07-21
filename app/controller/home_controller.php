@@ -12,6 +12,6 @@ class home_controller extends \yapf\controller
     {
         $this->ViewBag['id'] = $data['id'];
         $this->ViewBag['author'] = $data['name'];
-        return $this->view();
+        return $this->view('home\self_check');
     }
 }
