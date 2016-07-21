@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use yapf\Request;
 
 class example_controller extends \yapf\controller
 {
@@ -10,16 +11,17 @@ class example_controller extends \yapf\controller
         return $this->view();
     }
 
-    public function selfCheck(array $data)
+    public function selfCheck(Request $rq)
     {
-        $this->ViewBag['id'] = isset($data['id']) ? $data['id'] : 420;
-        $this->ViewBag['author'] = isset($data['name']) ? $data['name'] : 'toumash';
+        # gets data from the routed url, 2nd param is the default value
+        $this->ViewBag['id'] = $rq->route('id', 420);
+        $this->ViewBag['author'] = $rq->route('name', 'toumash');
         return $this->view('selfCheck');
     }
 
-    public function jsonTest(array $data)
+    public function jsonTest(Request $rq)
     {
-        return $this->json($data);
+        return $this->json($rq->route());
     }
 
     public function xmlTest()
@@ -34,5 +36,10 @@ class example_controller extends \yapf\controller
     public function status()
     {
         return $this->statusCode(418);
+    }
+
+    public function simpleContent(Request $rq)
+    {
+        return $this->content('simple text content generated from url query string: ' . print_r($rq->get(), true));
     }
 }
