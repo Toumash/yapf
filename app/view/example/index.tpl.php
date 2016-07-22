@@ -8,6 +8,7 @@ $this->ViewBag['title'] = 'Examples | yapf';
 <p>List of provided examples</p>
 <ul>
     <li><a href="/RoutingCheck">Routing check</a></li>
+    <li><a href="/subdirectory/whatever/index">Advanced routing (subdirectories)</a></li>
     <li><a href="/example/xmlTest">Xml test</a></li>
     <li><a href="/example/jsonTest">JSON test</a></li>
     <li><a href="/example/status">Return status code</a></li>

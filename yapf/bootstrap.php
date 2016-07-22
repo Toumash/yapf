@@ -122,11 +122,16 @@ if (empty($match['target'])) {
     $controller = $params['controller'];
     $action = isset($params['action']) ? $params['action'] : 'index';
     standard_route($controller, $action, $params);
-} else if (is_callable($match['target'])) {
+} elseif (is_callable($match['target'])) {
     $match['target']($match['params']);
-} else if (($pos = strpos($match['target'], '#')) !== false) {
+} elseif (($pos = strpos($match['target'], '#')) !== false) {
     $controller = substr($match['target'], 0, $pos);
     $action = substr($match['target'], $pos + 1);
+    standard_route($controller, $action, $match['params']);
+} elseif ($match['target'][0] === '@') {
+    $controller = substr($match['target'], 1);
+    $match['params']['controller'] = $controller;
+    $action = $match['params']['action'];
     standard_route($controller, $action, $match['params']);
 } else {
     show500();

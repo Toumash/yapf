@@ -10,30 +10,29 @@ Its ideal for school projects, even for small companies, which want to build sim
 ## Features ##
  
  - [x] Simple MVC structure  
- - [ ] Regex Routing engine (AltoRouter)  
+ - [x] Regex Routing engine (AltoRouter)  
  - [x] Templating system with stacking layouts and sections  
- - [ ] Examples for everything  
- - [ ] Multiple realms (subdirectories/subprojects) support `/projx/home/index`  
+ - [x] Examples for everything  
+ - [x] Multiple realms (subdirectories/subprojects) support `/projx/home/index`  
  
  
- **todo**
- 
- - simple routing system, which handles Response classes returned from controller
- - more examples
+ **todo**  
+ at this moment im using the framework in a projects/testing for bugs
 
 
-## Installation ##
- - `git clone https://Toumash@bitbucket.org/Toumash/yapf.git`  
+## Configuration ##
  - basic configuration `app/config/configuration.php` (**samples provided**)
  - examples everywhere - you wont get lost ;\) 
  - \[OPTIONAL\] Set-up database connection data at `app/config/database.ini.php`
- - \[OPTIONAL\] Set-up custom routing at `/app/config/routes.php`
+ - Set-up custom routing at `/app/config/routes.php`
+ 
+ If you done everything:
  - report issues at [bitbucket yapf project](https://bitbucket.org/Toumash/yapf/issues)
  - **PROFIT (???)**
 
 ## Structure ##
     +---app
-    |   +---config      # routing, db 
+    |   +---config      # routing, basic configuration 
     |   +---controller  
     |   +---helper      # your own files, which dont fall into controllers
     |   +---log         
