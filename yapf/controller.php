@@ -54,7 +54,7 @@ abstract class controller
 
     public function getControllerName()
     {
-        $name = $this->request->getControllerName();
+        $name = $this->request->getController();
         if (!empty($name)) {
             return $name;
         }

@@ -17,6 +17,14 @@ class Request
      * @var array
      */
     private $postParams;
+    /**
+     * @var string
+     */
+    private $controller;
+    /**
+     * @var string
+     */
+    private $action;
 
     public function __construct(array $routeParams, array $get, array $post)
     {
@@ -32,6 +40,38 @@ class Request
     public static function standard(array $params)
     {
         return new Request($params, $_GET, $_POST);
+    }
+
+    /**
+     * @return string
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * @param string $controller
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param string $action
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
     }
 
     /**
@@ -72,11 +112,6 @@ class Request
             throw new \LogicException("couldn't retrieve [$key] from the request \$_POST data");
         }
         return null;
-    }
-
-    public function getControllerName()
-    {
-        return $this->route('controller', '', false);
     }
 
     /**

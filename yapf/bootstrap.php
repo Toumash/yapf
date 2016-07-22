@@ -68,15 +68,19 @@ if ($cfg->isDebug()) {
  */
 function standard_route($controller, $action = 'index', $params = [])
 {
-    $controller = "\\app\\controller\\" . $controller . "_controller";
+    $controllerClass = "\\app\\controller\\" . $controller . "_controller";
 
-    if (file_exists(str_replace("\\", DS, substr($controller, 1)) . '.php')) {
-        require str_replace("\\", DS, substr($controller, 1)) . '.php';
+    if (file_exists(str_replace("\\", DS, substr($controllerClass, 1)) . '.php')) {
+        require str_replace("\\", DS, substr($controllerClass, 1)) . '.php';
         /** @var \yapf\controller $obj */
-        $obj = new $controller();
+        $obj = new $controllerClass();
 
         if (is_callable([$obj, $action])) {
+            unset($params['controller']);
+            unset($params['action']);
             $rq = \yapf\Request::standard($params);
+            $rq->setController($controller);
+            $rq->setAction($action);
             $obj->setRequestData($rq);
             $obj->$action($rq);
         } else {
@@ -87,13 +91,14 @@ function standard_route($controller, $action = 'index', $params = [])
         }
     } else {
         show404();
-        throw new BadRouteException("No controller with name: [$controller]");
+        throw new BadRouteException("No controller with name: [$controllerClass]");
     }
 }
 
 # routing
 $router = new AltoRouter();
-$router->setBasePath('');
+$basePath = $cfg->getBasePath();
+$router->setBasePath($basePath);
 
 # default route/index page
 $router->map('GET', '/', function () {
