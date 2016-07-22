@@ -26,9 +26,9 @@ Its ideal for school projects, even for small companies, which want to build sim
  - \[OPTIONAL\] Set-up database connection data at `app/config/database.ini.php`
  - Set-up custom routing at `/app/config/routes.php`
  
- If you done everything:
- - report issues at [bitbucket yapf project](https://bitbucket.org/Toumash/yapf/issues)
- - **PROFIT (???)**
+ If you done everything:  
+ - report issues at [bitbucket yapf project](https://bitbucket.org/Toumash/yapf/issues)  
+ - **PROFIT (???)**  
 
 ## Structure ##
     +---app

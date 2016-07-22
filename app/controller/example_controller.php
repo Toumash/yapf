@@ -35,9 +35,10 @@ class example_controller extends \yapf\controller
         return $this->xml('data', $data);
     }
 
-    public function status()
+    public function status(Request $rq)
     {
-        return $this->statusCode(418);
+        $code = $rq->route('id', 418, false);
+        return $this->statusCode($code);
     }
 
     public function simpleContent(Request $rq)
@@ -56,7 +57,8 @@ class example_controller extends \yapf\controller
                 $this->ViewBag['form_errors']['name'] = 'Name must be at least 3 characters long';
             }
             if ($this->isModelValid()) {
-                return $this->redirect('example/formSuccess');
+                # return $this->redirect('example/formSuccess');
+                return $this->content('hurraay!');
             }
             return $this->view();
         }
