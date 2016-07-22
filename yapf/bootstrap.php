@@ -66,10 +66,9 @@ if ($cfg->isDebug()) {
  * ]
  * @throws BadRouteException
  */
-function standard_route(array $params)
+function standard_route($controller, $action = 'index', $params = [])
 {
-    $controller = "\\app\\controller\\" . $params['controller'] . "_controller";
-    $action = empty($params['action']) ? 'index' : $params['action'];
+    $controller = "\\app\\controller\\" . $controller . "_controller";
 
     if (file_exists(str_replace("\\", DS, substr($controller, 1)) . '.php')) {
         require str_replace("\\", DS, substr($controller, 1)) . '.php';
@@ -99,11 +98,7 @@ $router->setBasePath('');
 # default route/index page
 $router->map('GET', '/', function () {
     $controller = Config::getInstance()->getDefaultController();
-    standard_route(
-        ['controller' => $controller,
-            'action' => 'index',
-            'params' => []
-        ]);
+    standard_route($controller, 'index', []);
 });
 
 # user configured routes
@@ -122,10 +117,17 @@ if ($match === false) {
 }
 session_start();
 # runs the closures from the routes array
-if (is_null($match['target']) || empty($match['target'])) {
-    standard_route($match['params']);
+if (empty($match['target'])) {
+    $params = $match['params'];
+    $controller = $params['controller'];
+    $action = isset($params['action']) ? $params['action'] : 'index';
+    standard_route($controller, $action, $params);
 } else if (is_callable($match['target'])) {
     $match['target']($match['params']);
+} else if (($pos = strpos($match['target'], '#')) !== false) {
+    $controller = substr($match['target'], 0, $pos);
+    $action = substr($match['target'], $pos + 1);
+    standard_route($controller, $action, $match['params']);
 } else {
     show500();
     throw new BadRouteException("No function to call, check your routes.php file");

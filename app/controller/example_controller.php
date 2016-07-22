@@ -16,11 +16,13 @@ class example_controller extends \yapf\controller
         # gets data from the routed url, 2nd param is the default value
         $this->ViewBag['id'] = $rq->route('id', 420);
         $this->ViewBag['author'] = $rq->route('name', 'toumash');
+        # optional view name
         return $this->view('selfCheck');
     }
 
     public function jsonTest(Request $rq)
     {
+        # when no arguments specified, route returns whole array of params (assoc)
         return $this->json($rq->route());
     }
 
