@@ -14,8 +14,8 @@ class example_controller extends \yapf\controller
     public function selfCheck(Request $rq)
     {
         # gets data from the routed url, 2nd param is the default value
-        $this->ViewBag['id'] = $rq->route('id', 420);
-        $this->ViewBag['author'] = $rq->route('name', 'toumash');
+        $this->viewBag['id'] = $rq->route('id', 420);
+        $this->viewBag['author'] = $rq->route('name', 'toumash');
         # optional view name
         return $this->view('selfCheck');
     }
@@ -50,16 +50,20 @@ class example_controller extends \yapf\controller
     {
         if ($rq->isPost()) {
             if (!$this->validateAntiForgeryToken($rq)) {
-                $this->ViewBag['form_errors'] = ['AntiForgeryToken invalid'];
+                $this->validationErrors[] = 'AntiForgeryToken invalid';
                 return $this->view();
             }
-            if (strlen(trim($rq->post('name'))) < 3) {
-                $this->ViewBag['form_errors']['name'] = 'Name must be at least 3 characters long';
+            $model = [
+                'name' => htmlspecialchars(trim($rq->post('name'))),
+            ];
+            if (strlen($model['name']) < 3) {
+                $this->validationErrors['name'] = 'Name must be at least 3 characters long';
             }
             if ($this->isModelValid()) {
                 # return $this->redirect('example/formSuccess');
-                return $this->content('hurraay!');
+                return $this->content("hurray! Your name is {$model['name']}");
             }
+            $this->viewBag['name'] = $model['name'];
             return $this->view();
         }
         return $this->view();
@@ -69,4 +73,6 @@ class example_controller extends \yapf\controller
     {
         return $this->content('hurray!');
     }
+
+
 }

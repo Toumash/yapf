@@ -10,8 +10,14 @@ class View
      * @var array
      */
     private $viewBag = [];
+    /**
+     * @var array
+     */
     private $validationErrors = [];
-    private $path;
+    /**
+     * @var string
+     */
+    private $templatePath;
 
     /** @var array */
     private $sections = [];
@@ -25,35 +31,17 @@ class View
         $this->viewBag = $viewBag;
     }
 
-    public function renderBody()
-    {
-        echo $this->buffer;
-    }
-
-    public function startSection()
-    {
-        ob_start();
-    }
-
-    public function endSection($name)
-    {
-        if (!isset($this->sections[$name])) {
-            $this->sections[$name] = [];
-        }
-        $this->sections[$name][] = ob_get_clean();
-    }
-
     public function layout($view_name, $controller = '')
     {
         $this->setTemplate($view_name, $controller);
     }
 
-    public function setTemplate($view_name, $controller_name = '')
+    private function setTemplate($view_name, $controller_name = '')
     {
         if (empty($view_name)) {
-            $this->path = '';
+            $this->templatePath = '';
         } else {
-            $this->path = $this->resolvePath($view_name, $controller_name);
+            $this->templatePath = $this->resolvePath($view_name, $controller_name);
         }
     }
 
@@ -80,31 +68,12 @@ class View
             . implode(';', $search_path));
     }
 
-    public function antiForgeryToken()
-    {
-        $token = Security::generateAntiForgeryToken();
-        $_SESSION['form_key'] = $token;
-        echo "<input type='hidden' name='form_key' value='$token'/>";
-    }
-
-    public function renderSection($name, $required = false)
-    {
-        if (isset($this->sections[$name])) {
-            foreach ($this->sections[$name] as $part) {
-                echo $part;
-            }
-            unset($this->sections[$name]);
-        } else if ($required) {
-            throw new ViewRendererException("Couldn't find required section $name");
-        }
-    }
-
     public function render()
     {
         $this->buffer = '';
-        while (!empty($this->path)) {
-            $load = $this->path;
-            $this->path = '';
+        while (!empty($this->templatePath)) {
+            $load = $this->templatePath;
+            $this->templatePath = '';
             ob_start();
             require $load;
             $this->buffer = ob_get_clean();
@@ -117,6 +86,49 @@ class View
         $this->validationErrors = $errors;
     }
 
+    protected function renderBody()
+    {
+        echo $this->buffer;
+    }
+
+    protected function startSection()
+    {
+        ob_start();
+    }
+
+    protected function endSection($name)
+    {
+        if (!isset($this->sections[$name])) {
+            $this->sections[$name] = [];
+        }
+        $this->sections[$name][] = ob_get_clean();
+    }
+
+    protected function antiForgeryToken()
+    {
+        $token = Security::generateAntiForgeryToken();
+        $_SESSION['form_key'] = $token;
+        echo "<input type='hidden' name='form_key' value='$token'/>";
+    }
+
+    protected function renderSection($name, $required = false)
+    {
+        if (isset($this->sections[$name])) {
+            foreach ($this->sections[$name] as $part) {
+                echo $part;
+            }
+            unset($this->sections[$name]);
+        } else if ($required) {
+            throw new ViewRendererException("Couldn't find required section $name");
+        }
+    }
+
+    /**
+     * Renders label for html element
+     * @param string $name name of the model element
+     * @param string $text the label for the element
+     * @param array $attrib html attributes for label
+     */
     protected function labelFor($name, $text, array $attrib = [])
     {
         $attrib['for'] = $name;
@@ -125,7 +137,6 @@ class View
 
     private function createHtmlElement($name, $value, array $attrib = [])
     {
-        //TODO: THIS FUNCTION NEEDS SERIOUS TESTING
         echo "<$name ";
         foreach ($attrib as $key => $val) {
             echo "$key=\"{$val}\"";
@@ -133,6 +144,12 @@ class View
         echo ">$value</$name>";
     }
 
+    /**
+     * Renders text editor for $name model-name with value of $value
+     * @param string $name
+     * @param string $value
+     * @param array $attrib html attributes for input
+     */
     protected function editorFor($name, $value, $attrib = [])
     {
         $attrib['type'] = 'text';
@@ -141,6 +158,12 @@ class View
         $this->createHtmlElement('input', '', $attrib);
     }
 
+    /**
+     * Displays validation message for a field named $name
+     * @param string $name
+     * @param string $message if you specify message, its gonna replace that one from controller
+     * @param array $attrib
+     */
     protected function validationMessageFor($name, $message = '', $attrib = [])
     {
         if (isset($this->validationErrors[$name])) {
@@ -149,6 +172,11 @@ class View
         }
     }
 
+    /**
+     * Lists all errors in validationErrors
+     * @param string $message additional message
+     * @param array $attrib html attributes for message
+     */
     protected function validationSummary($message = '', array $attrib = [])
     {
         # message
