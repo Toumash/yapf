@@ -44,4 +44,27 @@ class example_controller extends \yapf\controller
     {
         return $this->content('simple text content generated from url query string: ' . print_r($rq->get(), true));
     }
+
+    public function formTest(Request $rq)
+    {
+        if ($rq->isPost()) {
+            if (!$this->validateAntiForgeryToken($rq)) {
+                $this->ViewBag['form_errors'] = ['AntiForgeryToken invalid'];
+                return $this->view();
+            }
+            if (strlen(trim($rq->post('name'))) < 3) {
+                $this->ViewBag['form_errors']['name'] = 'Name must be at least 3 characters long';
+            }
+            if ($this->isModelValid()) {
+                return $this->redirect('example/formSuccess');
+            }
+            return $this->view();
+        }
+        return $this->view();
+    }
+
+    public function formSuccess()
+    {
+        return $this->content('hurray!');
+    }
 }

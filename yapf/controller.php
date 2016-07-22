@@ -14,7 +14,7 @@ abstract class controller
      * @var array
      * stores model data for a view
      */
-    protected $ViewBag = [];
+    protected $ViewBag = ['form_errors' => []];
 
     public function setParams(array $params)
     {
@@ -29,7 +29,7 @@ abstract class controller
      * @param string|null $view_name
      * @return View
      */
-    public function view($view_name = null)
+    protected function view($view_name = null)
     {
         if (!isset($view_name)) {
             $view_name = $this->getCaller(2);
@@ -47,7 +47,7 @@ abstract class controller
      */
     protected function getCaller($depth = 1)
     {
-        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3); // FIXME
+        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $depth + 1); // FIXME
         $caller = isset($dbt[$depth]['function']) ? $dbt[$depth]['function'] : null;
         return $caller;
     }
@@ -61,18 +61,18 @@ abstract class controller
         return $controller_name;
     }
 
-    public function json(array $data, $options = 0, $depth = 512)
+    protected function json(array $data, $options = 0, $depth = 512)
     {
         echo json_encode($data, $options, $depth);
         return true;
     }
 
-    public function statusCode($code = 200)
+    protected function statusCode($code = 200)
     {
         return http_response_code($code);
     }
 
-    public function xml($root_name, array $data)
+    protected function xml($root_name, array $data)
     {
         $xml = $this->to_xml($root_name, $data);
         if ($xml === false) {
@@ -96,24 +96,35 @@ abstract class controller
         return $object->asXML();
     }
 
-    public function content($content_string)
+    protected function isModelValid()
+    {
+        return empty($this->ViewBag['form_errors']);
+    }
+
+    protected function content($content_string)
     {
         echo $content_string;
         return true;
     }
 
-    public function isPost()
+    /**
+     * @param $where 'just like a element href="$where". Always absolute
+     */
+    protected function redirect($location, $remote = false)
     {
-        return $_SERVER['REQUEST_METHOD'] == 'POST';
+        // TODO: get www basePath from Configuration just like the AltoRouter
+        if ($remote) {
+            header("Location: $location", true, 302);
+        } else {
+            $host = $_SERVER['HTTP_HOST'];
+            $location = ltrim($location, '/');
+            header("Location: http://$host/$location", true, 302);
+        }
+        return true;
     }
 
-    public function isGet()
+    protected function validateAntiForgeryToken(Request $rq)
     {
-        return $_SERVER['REQUEST_METHOD'] == 'GET';
-    }
-
-    public function isDelete()
-    {
-        return $_SERVER['REQUEST_METHOD'] == 'DELETE';
+        return $_SESSION['form_key'] == $rq->post('form_key', '', false);
     }
 }

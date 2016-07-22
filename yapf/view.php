@@ -2,6 +2,8 @@
 namespace yapf;
 
 
+use yapf\helper\Security;
+
 class View
 {
     /**
@@ -49,7 +51,7 @@ class View
     {
         if (empty($view_name)) {
             $this->path = '';
-        }else {
+        } else {
             $this->path = $this->resolvePath($view_name, $controller_name);
         }
     }
@@ -75,6 +77,13 @@ class View
         }
         throw new ViewRendererException("No view found for [$controller_name] view: [$view_name]. searched locations:"
             . implode(';', $search_path));
+    }
+
+    public function antiForgeryToken()
+    {
+        $token = Security::generateAntiForgeryToken();
+        $_SESSION['form_key'] = $token;
+        echo "<input type='hidden' name='form_key' value='$token'/>";
     }
 
     public function renderSection($name, $required = false)

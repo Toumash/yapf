@@ -12,4 +12,5 @@ $this->ViewBag['title'] = 'Examples | yapf';
     <li><a href="/example/jsonTest">JSON test</a></li>
     <li><a href="/example/status">Return status code</a></li>
     <li><a href="/example/simpleContent?best_framework=yapf">Content string</a></li>
+    <li><a href="/example/formTest">Forms</a></li>
 </ul>

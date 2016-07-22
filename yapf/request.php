@@ -64,12 +64,12 @@ class Request
         if (is_null($key)) {
             return $this->postParams;
         }
-        if (isset($this->getParams[$key])) {
+        if (isset($this->postParams[$key])) {
             return $this->postParams[$key];
         } elseif (!empty($default)) {
             return $default;
         } elseif ($required) {
-            throw new \LogicException("couldn't retrieve [$key] from the request $_POST data");
+            throw new \LogicException("couldn't retrieve [$key] from the request \$_POST data");
         }
         return null;
     }
@@ -84,7 +84,7 @@ class Request
         if (is_null($key)) {
             return $this->routeParams;
         }
-        if (isset($this->getParams[$key])) {
+        if (isset($this->routeParams[$key])) {
             return $this->routeParams[$key];
         } elseif (!empty($default)) {
             return $default;
@@ -92,5 +92,20 @@ class Request
             throw new \LogicException("couldn't retrieve [$key] from the request url route data");
         }
         return null;
+    }
+
+    public function isPost()
+    {
+        return $_SERVER['REQUEST_METHOD'] == 'POST';
+    }
+
+    public function isGet()
+    {
+        return $_SERVER['REQUEST_METHOD'] == 'GET';
+    }
+
+    public function isDelete()
+    {
+        return $_SERVER['REQUEST_METHOD'] == 'DELETE';
     }
 }
