@@ -4,7 +4,7 @@ Yet Another PHP Framework
 [bitbucket.org/toumash/yapf](https://bitbucket.org/Toumash/yapf/overview)
 
 # Goal #
-The goal here was to provide simple php lightweight framework to start with when doing repetivive, small projects. 
+The goal here was to provide simple asp.net mvc like framework to start with when doing repetitive, small projects.
 Its ideal for school projects, even for small companies, which want to build simple, fast and cheap interactive web sites.
 
 ## Features ##

@@ -6,9 +6,9 @@ namespace yapf;
 abstract class controller
 {
     /**
-     * @var array
+     * @var Request
      */
-    protected $params;
+    protected $request;
 
     /**
      * @var array
@@ -16,9 +16,9 @@ abstract class controller
      */
     protected $ViewBag = ['form_errors' => []];
 
-    public function setParams(array $params)
+    public function setRequestData(Request $rq)
     {
-        $this->params = $params;
+        $this->request = $rq;
     }
 
     /**
@@ -29,7 +29,7 @@ abstract class controller
      * @param string|null $view_name
      * @return View
      */
-    protected function view($view_name = null)
+    protected function view($view_name = null, $model = null)
     {
         if (!isset($view_name)) {
             $view_name = $this->getCaller(2);
@@ -47,13 +47,18 @@ abstract class controller
      */
     protected function getCaller($depth = 1)
     {
-        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $depth + 1); // FIXME
+        $dbt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $depth + 1);
         $caller = isset($dbt[$depth]['function']) ? $dbt[$depth]['function'] : null;
         return $caller;
     }
 
     public function getControllerName()
     {
+        $name = $this->request->getControllerName();
+        if (!empty($name)) {
+            return $name;
+        }
+
         # fastest way to get callers base class name without namespaces
         $class_name = (new \ReflectionClass($this))->getShortName();
         # gets everything before _controller name
@@ -76,7 +81,7 @@ abstract class controller
     {
         $xml = $this->to_xml($root_name, $data);
         if ($xml === false) {
-            throw new ViewRendererException("Cannot create xml message");
+            throw new ViewRendererException("Couldn't create xml message");
         }
         echo $xml;
         return true;
@@ -101,6 +106,9 @@ abstract class controller
         return empty($this->ViewBag['form_errors']);
     }
 
+    /**
+     * @param $content_string string which will be directly written to response
+     */
     protected function content($content_string)
     {
         echo $content_string;

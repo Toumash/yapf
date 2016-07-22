@@ -74,6 +74,11 @@ class Request
         return null;
     }
 
+    public function getControllerName()
+    {
+        return $this->route('controller', '', false);
+    }
+
     /**
      * @param $key string key in the route values specified in the router. If null returns whole array
      * @param mixed $default fallback value, if nothing specified and key does not exists - throws Exception

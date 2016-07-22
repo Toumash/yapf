@@ -74,10 +74,10 @@ function standard_route($controller, $action = 'index', $params = [])
         require str_replace("\\", DS, substr($controller, 1)) . '.php';
         /** @var \yapf\controller $obj */
         $obj = new $controller();
-        $obj->setParams($params);
 
         if (is_callable([$obj, $action])) {
             $rq = \yapf\Request::standard($params);
+            $obj->setRequestData($rq);
             $obj->$action($rq);
         } else {
             show404();
