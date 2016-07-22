@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon"/>
 
-    <title><?php echo $this->ViewBag['title']; ?></title>
+    <title><?php echo $this->viewBag['title']; ?></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <style>
         /* Links */
@@ -178,9 +178,9 @@
                 <div class="inner">
                     <h3 class="masthead-brand">
                         <?php
-                        echo(isset($this->ViewBag['page-title'])
-                            ? $this->ViewBag['page-title']
-                            : $this->ViewBag['title']);
+                        echo(isset($this->viewBag['page-title'])
+                            ? $this->viewBag['page-title']
+                            : $this->viewBag['title']);
                         ?>
                     </h3>
                     <nav class="nav nav-masthead">

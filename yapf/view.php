@@ -9,7 +9,8 @@ class View
     /**
      * @var array
      */
-    private $ViewBag = [];
+    private $viewBag = [];
+    private $validationErrors = [];
     private $path;
 
     /** @var array */
@@ -21,7 +22,7 @@ class View
 
     public function setData(array $viewBag)
     {
-        $this->ViewBag = $viewBag;
+        $this->viewBag = $viewBag;
     }
 
     public function renderBody()
@@ -109,5 +110,55 @@ class View
             $this->buffer = ob_get_clean();
         }
         echo $this->buffer;
+    }
+
+    public function setErrors(array $errors)
+    {
+        $this->validationErrors = $errors;
+    }
+
+    protected function labelFor($name, $text, array $attrib = [])
+    {
+        $attrib['for'] = $name;
+        $this->createHtmlElement('label', $text, $attrib);
+    }
+
+    private function createHtmlElement($name, $value, array $attrib = [])
+    {
+        //TODO: THIS FUNCTION NEEDS SERIOUS TESTING
+        echo "<$name ";
+        foreach ($attrib as $key => $val) {
+            echo "$key=\"{$val}\"";
+        }
+        echo ">$value</$name>";
+    }
+
+    protected function editorFor($name, $value, $attrib = [])
+    {
+        $attrib['type'] = 'text';
+        $attrib['name'] = $name;
+        $attrib['value'] = $value;
+        $this->createHtmlElement('input', '', $attrib);
+    }
+
+    protected function validationMessageFor($name, $message = '', $attrib = [])
+    {
+        if (isset($this->validationErrors[$name])) {
+            $message = empty($message) ? $this->validationErrors[$name] : $message;
+            $this->createHtmlElement('span', $message, $attrib);
+        }
+    }
+
+    protected function validationSummary($message = '', array $attrib = [])
+    {
+        # message
+        if (!empty($message)) {
+            $this->createHtmlElement('span', $message, $attrib);
+        }
+
+        # rest of the errors
+        foreach ($this->validationErrors as $error) {
+            $this->createHtmlElement('span', $error, $attrib);
+        }
     }
 }

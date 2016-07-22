@@ -1,7 +1,7 @@
 <?php
 $this->layout('home/_layout');
-$this->ViewBag['title'] = 'Home | yapf';
-$this->ViewBag['page-title'] = 'Home';
+$this->viewBag['title'] = 'Home | yapf';
+$this->viewBag['page-title'] = 'Home';
 ?>
 <div class="inner cover">
     <h1 class="cover-heading">yapf</h1>

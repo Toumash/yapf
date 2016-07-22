@@ -1,25 +1,28 @@
 <?php
 $this->layout('example/_layout');
-$this->ViewBag['title'] = 'Forms | yapf';
+$this->viewBag['title'] = 'Forms | yapf';
 ?>
-    <div class="page-header">
-        <h1>Forms</h1>
-    </div>
-    <p>AntiForgeryToken</p>
-    <form method="post" action="">
-        <?php $this->antiForgeryToken(); ?>
-        <div class="form-group <?php echo empty($this->ViewBag['form_errors']['name']) ? '' : 'has-error'; ?>">
-            <label>Enter your name:
-                <input type="text" name="name" class="form-control"/></label>
-            <?php if (!empty($this->ViewBag['form_errors']['name'])) {
-                echo "<span>", $this->ViewBag['form_errors']['name'], "</span>";
-            }
-            ?>
+<div class="page-header">
+    <h1>Forms</h1>
+</div>
+<form method="post" action="">
+    <?php $this->antiForgeryToken(); ?>
+    <div class="form-horizontal">
+        <h4>AntiForgeryToken test</h4>
+        <hr/>
+        <?php $this->validationSummary('', ['class' => 'text-danger']); ?>
+        <div class="form-group">
+            <?php $this->labelFor('name', 'enter your name', ['class' => 'control-label col-md-3']); ?>
+            <div class="col-md-9">
+                <?php
+                $this->editorFor('name', isset($this->viewBag['name']) ? $this->viewBag['name'] : 'mike', ['class' => 'form-control']);
+                $this->validationMessageFor('name', '', ['class' => 'text-danger']);
+                ?>
+            </div>
         </div>
-        <input type="submit" value="ok"/>
-    </form>
-<?php
-foreach ($this->ViewBag['form_errors'] as $error) {
-    echo '<span style="color:red;">', $error, '</span>';
-}
-?>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default"/>
+            </div>
+        </div>
+</form>

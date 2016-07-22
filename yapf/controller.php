@@ -12,9 +12,13 @@ abstract class controller
 
     /**
      * @var array
+     */
+    protected $validationErrors = [];
+    /**
+     * @var array
      * stores model data for a view
      */
-    protected $ViewBag = ['form_errors' => []];
+    protected $viewBag = [];
 
     public function setRequestData(Request $rq)
     {
@@ -36,7 +40,8 @@ abstract class controller
         }
         $view = new View();
         $view->setTemplate($view_name, $this->getControllerName());
-        $view->setData($this->ViewBag);
+        $view->setData($this->viewBag);
+        $view->setErrors($this->validationErrors);
 
         $view->render();
     }
@@ -103,7 +108,7 @@ abstract class controller
 
     protected function isModelValid()
     {
-        return empty($this->ViewBag['form_errors']);
+        return empty($this->validationErrors);
     }
 
     /**

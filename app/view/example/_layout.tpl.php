@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon"/>
 
-    <title><?php echo $this->ViewBag['title']; ?></title>
+    <title><?php echo $this->viewBag['title']; ?></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
     <?php $this->renderSection('styles'); ?>
