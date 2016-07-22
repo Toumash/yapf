@@ -62,7 +62,7 @@ class Request
     public function post($key = null, $default = null, $required = true)
     {
         if (is_null($key)) {
-            return $this->getParams;
+            return $this->postParams;
         }
         if (isset($this->getParams[$key])) {
             return $this->postParams[$key];
@@ -82,7 +82,7 @@ class Request
     public function route($key = null, $default = null, $required = true)
     {
         if (is_null($key)) {
-            return $this->getParams;
+            return $this->routeParams;
         }
         if (isset($this->getParams[$key])) {
             return $this->routeParams[$key];
