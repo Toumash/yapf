@@ -53,17 +53,17 @@ class example_controller extends \yapf\controller
                 $this->validationErrors[] = 'AntiForgeryToken invalid';
                 return $this->view();
             }
-            $model = [
+            $model = (object)[
                 'name' => htmlspecialchars(trim($rq->post('name'))),
             ];
-            if (strlen($model['name']) < 3) {
+            if (strlen($model->name) < 3) {
                 $this->validationErrors['name'] = 'Name must be at least 3 characters long';
             }
             if ($this->isModelValid()) {
                 # return $this->redirect('example/formSuccess');
-                return $this->content("hurray! Your name is {$model['name']}");
+                return $this->content("hurray! Your name is {$model->name}");
             }
-            $this->viewBag['name'] = $model['name'];
+            $this->viewBag['name'] = $model->name;
             return $this->view();
         }
         return $this->view();

@@ -31,12 +31,12 @@ class View
         $this->viewBag = $viewBag;
     }
 
-    public function layout($view_name, $controller = '')
+    private function layout($view_name, $controller = '')
     {
         $this->setTemplate($view_name, $controller);
     }
 
-    private function setTemplate($view_name, $controller_name = '')
+    public function setTemplate($view_name, $controller_name = '')
     {
         if (empty($view_name)) {
             $this->templatePath = '';
@@ -132,10 +132,10 @@ class View
     protected function labelFor($name, $text, array $attrib = [])
     {
         $attrib['for'] = $name;
-        $this->createHtmlElement('label', $text, $attrib);
+        static::createHtmlElement('label', $text, $attrib);
     }
 
-    private function createHtmlElement($name, $value, array $attrib = [])
+    public static function createHtmlElement($name, $value, array $attrib = [])
     {
         echo "<$name ";
         foreach ($attrib as $key => $val) {
@@ -155,7 +155,7 @@ class View
         $attrib['type'] = 'text';
         $attrib['name'] = $name;
         $attrib['value'] = $value;
-        $this->createHtmlElement('input', '', $attrib);
+        static::createHtmlElement('input', '', $attrib);
     }
 
     /**
@@ -168,7 +168,7 @@ class View
     {
         if (isset($this->validationErrors[$name])) {
             $message = empty($message) ? $this->validationErrors[$name] : $message;
-            $this->createHtmlElement('span', $message, $attrib);
+            static::createHtmlElement('span', $message, $attrib);
         }
     }
 
@@ -181,12 +181,12 @@ class View
     {
         # message
         if (!empty($message)) {
-            $this->createHtmlElement('span', $message, $attrib);
+            static::createHtmlElement('span', $message, $attrib);
         }
 
         # rest of the errors
         foreach ($this->validationErrors as $error) {
-            $this->createHtmlElement('span', $error, $attrib);
+            static::createHtmlElement('span', $error, $attrib);
         }
     }
 }
