@@ -71,8 +71,9 @@ abstract class controller
         return $controller_name;
     }
 
-    protected function json(array $data, $options = 0, $depth = 512)
+    protected function json(array $data, $httpCode = 200, $options = 0, $depth = 512)
     {
+        header('Content-Type: application/json', true, $httpCode);
         echo json_encode($data, $options, $depth);
         return true;
     }
@@ -82,12 +83,13 @@ abstract class controller
         return http_response_code($code);
     }
 
-    protected function xml($root_name, array $data)
+    protected function xml($root_name, array $data, $httpCode = 200)
     {
         $xml = $this->to_xml($root_name, $data);
         if ($xml === false) {
             throw new ViewRendererException("Couldn't create xml message");
         }
+        header('Content-Type: application/xml', true, $httpCode);
         echo $xml;
         return true;
     }
