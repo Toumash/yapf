@@ -19,6 +19,16 @@ abstract class controller
      * stores model data for a view
      */
     protected $viewBag = [];
+    /**
+     * @var TempData
+     */
+    protected $tempData;
+
+
+    public function __construct()
+    {
+        $this->tempData = new TempData();
+    }
 
     public function setRequestData(Request $rq)
     {
