@@ -19,16 +19,6 @@ abstract class controller
      * stores model data for a view
      */
     protected $viewBag = [];
-    /**
-     * @var TempData
-     */
-    protected $tempData;
-
-
-    public function __construct()
-    {
-        $this->tempData = new TempData();
-    }
 
     public function setRequestData(Request $rq)
     {
@@ -143,7 +133,9 @@ abstract class controller
         } else {
             $host = $_SERVER['HTTP_HOST'];
             $location = ltrim($location, '/');
-            header("Location: http://$host/$location", true, 302);
+            $base = Config::getInstance()->getBasePath();
+            $base = empty($base)?'':$base.'/';
+            header("Location: http://$host/$base$location", true, 302);
         }
         return true;
     }

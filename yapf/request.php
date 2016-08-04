@@ -79,14 +79,14 @@ class Request
      * @param mixed $default fallback value, if nothing specified and key does not exists - throws Exception
      * @return mixed if key exist it returns data from the $_GET super global
      */
-    public function get($key = null, $default = null, $required = true)
+    public function get($key = null, $default = null, $required = false)
     {
         if (is_null($key)) {
             return $this->getParams;
         }
         if (isset($this->getParams[$key])) {
             return $this->getParams[$key];
-        } elseif (!empty($default)) {
+        } elseif ($default != null) {
             return $default;
         } elseif ($required) {
             throw new \LogicException("couldn't retrieve [$key] from the request $_GET data");
@@ -99,14 +99,14 @@ class Request
      * @param mixed $default fallback value, if nothing specified and key does not exists - throws Exception
      * @return mixed if key exist it returns data from the $_POST super global
      */
-    public function post($key = null, $default = null, $required = true)
+    public function post($key = null, $default = null, $required = false)
     {
         if (is_null($key)) {
             return $this->postParams;
         }
         if (isset($this->postParams[$key])) {
             return $this->postParams[$key];
-        } elseif (!empty($default)) {
+        } elseif ($default != null) {
             return $default;
         } elseif ($required) {
             throw new \LogicException("couldn't retrieve [$key] from the request \$_POST data");
@@ -119,14 +119,14 @@ class Request
      * @param mixed $default fallback value, if nothing specified and key does not exists - throws Exception
      * @return mixed if key exist it returns data from the routed url
      */
-    public function route($key = null, $default = null, $required = true)
+    public function route($key = null, $default = null, $required = false)
     {
         if (is_null($key)) {
             return $this->routeParams;
         }
         if (isset($this->routeParams[$key])) {
             return $this->routeParams[$key];
-        } elseif (!empty($default)) {
+        } elseif ($default != null) {
             return $default;
         } elseif ($required) {
             throw new \LogicException("couldn't retrieve [$key] from the request url route data");
@@ -147,5 +147,20 @@ class Request
     public function isDelete()
     {
         return $_SERVER['REQUEST_METHOD'] == 'DELETE';
+    }
+
+    public function file($key, $default = null, $required = false)
+    {
+        if (is_null($key)) {
+            return $_FILES;
+        }
+        if (isset($_FILES[$key])) {
+            return $_FILES[$key];
+        } elseif ($default != null) {
+            return $default;
+        } elseif ($required) {
+            throw new \LogicException("couldn't retrieve [$key] from the request url route data");
+        }
+        return null;
     }
 }

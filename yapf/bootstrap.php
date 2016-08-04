@@ -45,6 +45,7 @@ if (file_exists(app_config . 'configuration.php')) {
     require app_config . 'configuration.php';
     app_configure($cfg);
 }
+define('wwwroot', Config::getInstance()->getBasePath() . '/');
 
 
 # error reporting configuration

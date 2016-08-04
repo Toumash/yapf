@@ -7,7 +7,7 @@ namespace yapf;
  */
 class TempData
 {
-    public function get($offset)
+    public static function get($offset)
     {
         if (isset($_SESSION['tmp'])) {
             $value = $_SESSION['tmp'][$offset];
@@ -17,7 +17,7 @@ class TempData
         return null;
     }
 
-    public function set($offset, $value)
+    public static function set($offset, $value)
     {
         $_SESSION['tmp'][$offset] = $value;
     }

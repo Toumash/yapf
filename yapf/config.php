@@ -9,22 +9,6 @@ class Config
     private $default_controller = 'home';
     private $base_path = '';
 
-    /**
-     * @return string
-     */
-    public function getBasePath()
-    {
-        return $this->base_path;
-    }
-
-    /**
-     * @param string $base_path
-     */
-    public function setBasePath($base_path)
-    {
-        $this->base_path = $base_path;
-    }
-
     private function __construct()
     {
     }
@@ -38,6 +22,22 @@ class Config
             self::$instance = new $c();
         }
         return self::$instance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return $this->base_path;
+    }
+
+    /**
+     * @param string $base_path
+     */
+    public function setBasePath($base_path)
+    {
+        $this->base_path = rtrim($base_path, '/');
     }
 
     /**
